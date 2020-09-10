@@ -1,0 +1,30 @@
+<button nz-button (click)="addRow()" nzType="primary">Add</button>
+
+<nz-table #editRowTable nzBordered [nzData]="courses" nzTableLayout="fixed">
+  <thead>
+    <tr>
+      <th nzWidth="25%">Number</th>
+      <th nzWidth="15%">Amount</th>
+      <th nzWidth="40%">extraInfo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of editRowTable.data">
+      <ng-container *ngIf="!editCache[data.id].edit; else editTemplate">
+        <td>{{ data.courseNumber }}</td>
+        <td>{{ data.courseAmount }}</td>
+        <td>{{ data.extraInfo }}</td>
+        <td><a (click)="startEdit(data.id)">Edit</a></td>
+      </ng-container>
+      <ng-template #editTemplate>
+        <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.courseNumber" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.courseAmount" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.extraInfo" /></td>
+        <td>
+          <a (click)="saveEdit(data.id)" class="save">Save</a>
+          <a nz-popconfirm nzTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(data.id)">Cancel</a>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</nz-table>
