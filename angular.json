@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "admin_courses": {
+    "adminCourses": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/admin_courses",
+            "outputPath": "dist/adminCourses",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -74,18 +74,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "admin_courses:build"
+            "browserTarget": "adminCourses:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "admin_Courses:build:production"
+              "browserTarget": "adminCourses:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "admin_courses:build"
+            "browserTarget": "adminCourses:build"
           }
         },
         "test": {
@@ -122,16 +122,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "admin_courses:serve"
+            "devServerTarget": "adminCourses:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "admin_courses:serve:production"
+              "devServerTarget": "adminCourses:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "admin_courses"
+  "defaultProject": "adminCourses"
 }
