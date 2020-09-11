@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../course.service';
 import { Course } from '../course.model';
-import { Observable } from 'rxjs';
 export interface CourseId extends Course { id: string; }
 
 @Component({
@@ -21,10 +20,7 @@ export class CoursesListComponent implements OnInit {
 
   ngOnInit() {
     this.courseService.getCourses().subscribe(data => {
-      console.log(data);
       this.courses = data.map(e => {
-        console.log(e.payload.doc.data());
-        console.log(e.payload.doc.id);
         const data = e.payload.doc.data() as Course;
         const id = e.payload.doc.id;
 
@@ -40,8 +36,7 @@ export class CoursesListComponent implements OnInit {
   }
 
   saveEdit(id: string): void {
-    // const index = this.courses.findIndex(item => item.id === id);
-    this.update(this.editCache[id].data);
+    this.courseService.updateCourse(this.editCache[id].data, id);
     this.editCache[id].edit = false;
   }
 
@@ -62,10 +57,6 @@ export class CoursesListComponent implements OnInit {
     });
   }
 
-  update(couse: Course) {
-    this.courseService.updateCourse(couse);
-  }
-
   delete(id: string) {
     this.courseService.deleteCourse(id);
   }
@@ -76,10 +67,13 @@ export class CoursesListComponent implements OnInit {
 
   addRow(): void {
     const course = {
-      courseNumber: 'string',
-      paymentOption: 'string',
-      courseAmount: 2,
-      extraInfo: 'string',
+      courseName: '',
+      email: '',
+      password: '',
+      webName: 'string',
+      state: 'toDo',
+      courseType: 'frontend',
+      url: ''
     };
 
     this.courseService.createCourse(course);

@@ -1,7 +1,10 @@
 export class Course {
   id?: string;
-  courseNumber: string;
-  paymentOption: string;
-  courseAmount: number;
-  extraInfo: string;
+  courseName: string;
+  email: string;
+  password: string;
+  webName: string;
+  state: string;
+  courseType: string;
+  url: string;
 }

@@ -24,10 +24,9 @@ export class CourseService {
     return this.firestore.collection('courses').add(course);
   }
 
-  updateCourse(course: Course) {
-    console.log(course)
+  updateCourse(course: Course, id: string) {
     delete course.id;
-    this.firestore.doc('courses/' + course.id).update(course);
+    this.firestore.doc('courses/' + id).update(course);
   }
 
   deleteCourse(courseId: string) {
