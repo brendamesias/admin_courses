@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CourseService } from '../course.service';
 import { Course } from '../course.model';
+import { Subscription } from 'rxjs';
 export interface CourseId extends Course { id: string; }
 
 @Component({
@@ -8,18 +9,19 @@ export interface CourseId extends Course { id: string; }
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss']
 })
-export class CoursesListComponent implements OnInit {
+export class CoursesListComponent implements OnInit, OnDestroy {
 
   editCache: { [key: string]: { edit: boolean; data: Course } } = {};
   courses: Course[] = [];
   editId: string | null = null;
+  getCourses: Subscription;
 
   constructor(
     private courseService: CourseService
   ) { }
 
   ngOnInit() {
-    this.courseService.getCourses().subscribe(data => {
+    this.getCourses = this.courseService.getCourses().subscribe(data => {
       this.courses = data.map(e => {
         const data = e.payload.doc.data() as Course;
         const id = e.payload.doc.id;
@@ -29,6 +31,10 @@ export class CoursesListComponent implements OnInit {
 
       this.updateEditCache();
     });
+  }
+
+  ngOnDestroy() {
+    this.getCourses.unsubscribe();
   }
 
   startEdit(id: string): void {
@@ -70,7 +76,7 @@ export class CoursesListComponent implements OnInit {
       courseName: '',
       email: '',
       password: '',
-      webName: 'string',
+      webName: '',
       state: 'toDo',
       courseType: 'frontend',
       url: ''

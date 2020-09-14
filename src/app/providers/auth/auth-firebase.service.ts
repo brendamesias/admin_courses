@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AuthFirebaseService {
 
   private user: Observable<firebase.User | null>;
+  public userId: string;
   private isAuthenticated: boolean;
 
   constructor(
@@ -19,6 +20,7 @@ export class AuthFirebaseService {
     this.user = this.afAuth.authState;
     this.afAuth.onAuthStateChanged((user) => {
       this.isAuthenticated = !!user;
+      this.userId = user ? user.uid : '';
     });
   }
 
@@ -28,8 +30,8 @@ export class AuthFirebaseService {
   }
 
   // Obtener el observador del usuario actual
-  get currentUser(): Observable<firebase.User | null> {
-    return this.user;
+  get currentUser(): Promise<firebase.User> {
+    return this.afAuth.currentUser;
   }
 
   // Registro con email
@@ -42,13 +44,13 @@ export class AuthFirebaseService {
   }
 
   // Autenticación con Facebook
-  authWithFacebook(): Promise< void |firebase.auth.UserCredential> {
+  authWithFacebook(): Promise<void | firebase.auth.UserCredential> {
     const provider: firebase.auth.FacebookAuthProvider = new firebase.auth.FacebookAuthProvider();
     provider.addScope('user_birthday');
     return this.afAuth.signInWithPopup(provider)
-    .then(() => {
-      this.router.navigateByUrl('/home');
-    });
+      .then(() => {
+        this.router.navigateByUrl('/home');
+      });
   }
   // Autenticación con Google
   authWithGoogle(): Promise<void | firebase.auth.UserCredential> {
@@ -72,7 +74,9 @@ export class AuthFirebaseService {
 
   // Finalizar sesión
   signOut(): Promise<void> {
-    return this.afAuth.signOut();
+    return this.afAuth.signOut().then(() => {
+
+    });
   }
 
   // Actualizar perfil firebase authentication

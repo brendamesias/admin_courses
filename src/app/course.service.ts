@@ -1,36 +1,42 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Course } from './course.model';
+import { AuthFirebaseService } from './providers/auth/auth-firebase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
 
-  private coursesCollection: AngularFirestoreCollection<Course>;
-
   constructor(
-    private readonly afs: AngularFirestore,
+    private authService: AuthFirebaseService,
     private firestore: AngularFirestore
   ) {
-    this.coursesCollection = afs.collection<Course>('courses');
   }
 
   getCourses() {
-    return this.coursesCollection.snapshotChanges();
+    return this.firestore.collection('users').doc(this.authService.userId).collection('courses').snapshotChanges();
   }
 
   createCourse(course: Course) {
-    return this.firestore.collection('courses').add(course);
+    return this.firestore.collection('users').doc(this.authService.userId).collection('courses').add(course);
   }
 
   updateCourse(course: Course, id: string) {
     delete course.id;
-    this.firestore.doc('courses/' + id).update(course);
+    this.firestore
+    .collection('users')
+    .doc(this.authService.userId)
+    .collection('courses')
+    .doc(id).update(course);
   }
 
   deleteCourse(courseId: string) {
-    this.firestore.doc('courses/' + courseId).delete();
+    this.firestore
+    .collection('users')
+    .doc(this.authService.userId)
+    .collection('courses')
+    .doc(courseId).delete();
   }
 
 }
