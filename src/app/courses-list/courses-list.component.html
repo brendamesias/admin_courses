@@ -1,35 +1,35 @@
 <button nz-button (click)="addRow()" nzType="primary">Crear un nuevo curso</button>
 <br>
 <br>
-<nz-table #editRowTable nzBordered [nzData]="courses">
+<nz-table #columnTable nzBordered [nzData]="courses" [nzScroll]="{ x: '1200px'}">
   <thead>
     <tr>
-      <th>Nombre del Curso</th>
-      <th>Correo</th>
-      <th>Contraseña</th>
-      <th>Nombre de la página</th>
-      <th>Estado</th>
+      <th nzLeft nzWidth="150px">Nombre del Curso</th>
+      <th nzWidth="200px">Correo</th>
+      <th nzWidth="150px">Contraseña</th>
+      <th nzWidth="150px">Nombre de la página</th>
+      <th nzWidth="180px">Estado</th>
       <th>Tipo de curso</th>
-      <th>URL</th>
-      <th>Acciones</th>
+      <th nzWidth="180px">URL</th>
+      <th nzRight nzWidth="100px" nzRight>Acciones</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of editRowTable.data">
+    <tr *ngFor="let data of columnTable.data">
       <ng-container *ngIf="!editCache[data.id].edit; else editTemplate">
 
-        <td>{{ data.courseName }}</td>
-        <td>{{ data.email }}</td>
-        <td>{{ data.password }}</td>
-        <td>{{ data.webName }}</td>
+        <td nzLeft nzBreakWord>{{ data.courseName }}</td>
+        <td nzBreakWord>{{ data.email }}</td>
+        <td nzBreakWord>{{ data.password }}</td>
+        <td nzBreakWord>{{ data.webName }}</td>
         <td> <nz-select [(ngModel)]="editCache[data.id].data.state" nzDisabled>
           <nz-option nzValue="toDo" nzLabel="Pendiente"></nz-option>
           <nz-option nzValue="doing" nzLabel="En curso"></nz-option>
           <nz-option nzValue="done" nzLabel="Terminado"></nz-option>
         </nz-select></td>
         <td>{{ data.courseType }}</td>
-        <td><a href="data.url" target="_blank">{{ data.url }}</a></td>
-        <td>
+        <td nzBreakWord><a href="data.url" target="_blank">{{ data.url }}</a></td>
+        <td nzRight>
           <a (click)="startEdit(data.id)"><i nz-icon nzType="edit" style="font-size: 22px;"></i> </a>
           <a nz-popconfirm nzTitle="¿Está seguro que desea eliminar?" (nzOnConfirm)="delete(data.id)">
             <i nz-icon nzType="delete" style="font-size: 22px;  padding-left: 12px;"></i>
@@ -37,7 +37,7 @@
         </td>
       </ng-container>
       <ng-template #editTemplate>
-        <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.courseName" /></td>
+        <td nzLeft><input type="text" nz-input [(ngModel)]="editCache[data.id].data.courseName" /></td>
         <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.email" /></td>
         <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.password" /></td>
         <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.webName" /></td>
@@ -55,7 +55,7 @@
           <nz-option nzValue="softSkills" nzLabel="softSkills"></nz-option>
         </nz-select></td>
         <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.url" /></td>
-        <td>
+        <td nzRight>
           <a (click)="saveEdit(data.id)" class="save">Save</a>
           <a nz-popconfirm nzTitle="¿Esta seguro que desea cancelar?" (nzOnConfirm)="cancelEdit(data.id)">Cancel</a>
         </td>

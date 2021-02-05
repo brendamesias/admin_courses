@@ -1,8 +1,8 @@
 <nz-layout>
-  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzBreakpoint]="'lg'">
+  <nz-sider nzCollapsible [nzBreakpoint]="'lg'" [nzCollapsedWidth]="0">
     <div class="logo">
     </div>
-    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" >
       <li nz-menu-item><span><i nz-icon type="user"></i><span class="nav-text">nav 1</span></span></li>
       <li nz-menu-item><span><i nz-icon type="video-camera"></i><span class="nav-text">nav 2</span></span>
       </li>
@@ -17,6 +17,6 @@
         <app-courses-list></app-courses-list>
       </div>
     </nz-content>
-    <nz-footer style="text-align: center;">©2020 Brenda Mesias Villar</nz-footer>
+    <nz-footer style="text-align: center;">©2020 Brenda Mesias</nz-footer>
   </nz-layout>
 </nz-layout>

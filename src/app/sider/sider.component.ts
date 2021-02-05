@@ -8,7 +8,6 @@ import { AuthFirebaseService } from '../providers/auth/auth-firebase.service';
   styleUrls: ['./sider.component.scss']
 })
 export class SiderComponent implements OnInit {
-  isCollapsed = false;
 
   title = 'adminCourses';
 
